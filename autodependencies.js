@@ -1,4 +1,3 @@
-//Don't remove this semicolon!!!
 ;(function ($, un) {
     'use strict';
 
