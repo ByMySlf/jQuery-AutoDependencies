@@ -21,7 +21,7 @@
         });
      
         self.dependents = $(document).find('[data-injector="' + self.sourceElement[0].name + '"]')
-                                     .prop('disabled', true);
+                                     .prop('readonly', true);
     }
 
     AutoDependencies.objectIndexRegex = /\[(\d+)\]/;
