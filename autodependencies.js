@@ -68,23 +68,20 @@
         },
 
         parseObject : function (base, propStr) {
-            var i = propStr.indexOf('.'), objIndex, prop;
+            var splitedPropStr = propStr.split('.'), prop, objIndex;
 
-            prop = propStr.substring(0, (i == -1 ? propStr.length : i));
-            //Check square brackets - []
-            objIndex = prop.match(AutoDependencies.objectIndexRegex);
-            if (objIndex) {
-                //prop is only a array index, ex.:[0]
-                if (objIndex.index == 0) {
-                    base = base[objIndex[1]];
-                } else { //prop is a mix of property and index
-                    base = base[prop.replace(AutoDependencies.replaceIndexRegex, '')][objIndex[1]];
+            while (splitedPropStr.length) {
+                prop = splitedPropStr.shift();
+                //Check square brackets - []
+                objIndex = prop.match(AutoDependencies.objectIndexRegex);
+                if (objIndex) {
+                     base = base[prop.replace(AutoDependencies.replaceIndexRegex, '')][objIndex[1]];
+                } else {
+                    base = base[prop];
                 }
-            } else {
-                base = base[prop];
             }
 
-            return i == -1 ? base : this.parseObject(base, propStr.substring(++i));
+            return base;
         },
 
         fillDependents : function (data) {
